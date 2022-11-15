@@ -197,4 +197,18 @@ public class ApiTestController : ControllerBase
 			return StatusCode(501);
 		}
 	}
+
+    [Route("collection")]
+    [HttpGet]
+    public async Task<ActionResult<List<object>>> GetCollection()
+    {
+        if (this.authHeaderHandler(this.Request.Headers))
+		{
+			return await _dataModule.GetCollection();
+		}
+		else
+		{
+			return StatusCode(501);
+		}
+    }
 }

@@ -1,14 +1,19 @@
 namespace ApiTest.DataModule;
 
-public class Post
+public interface Item
 {
+	public int id { get; set; }
+}
+
+public class Post : Item
+{
+	public int id { get; set; }
 	public int userId { get; set; }
-	public int id  { get; set; }
 	public string? title { get; set; }
 	public string? body { get; set; }
 }
 
-public class User
+public class User: Item
 {
 	public int id { get; set; }
 	public string? name { get; set; }
@@ -42,9 +47,9 @@ public class Geo
 	public string? lng { get; set; }
 }
 
-public class Album
+public class Album : Item
 {
-	public int userId { get; set; }
 	public int id { get; set; }
+	public int userId { get; set; }
 	public string? title { get; set; }
 }

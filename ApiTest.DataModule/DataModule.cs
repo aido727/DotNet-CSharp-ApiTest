@@ -166,6 +166,34 @@ public class DataModuleService
 		}
 	}
 
+	public static async Task<List<object>> GetCollectionAsync()
+	{
+		const int numOfItems = 30;
+		try
+		{
+			List<Item> collection = new List<Item>();
+			List<object> result = new List<object>();
+			collection.AddRange(await FetchDataAsync<Post>());
+			collection.AddRange(await FetchDataAsync<User>());
+			collection.AddRange(await FetchDataAsync<Album>());
+
+			var random = new Random();
+			// NOTE: there's no guarentee one of each type will appear in the final list
+
+			for(var i = 0; i < numOfItems; i++)
+			{
+				result.Add(collection[random.Next(collection.Count)]);
+			}
+
+			return result;		
+		}
+		catch(Exception exception)
+		{
+			Console.WriteLine(exception);
+			throw;
+		}
+	}
+
 	public Task<List<T>> GetData<T>(int id)
 	{
 		return FetchDataAsync<T>(id);
@@ -189,5 +217,10 @@ public class DataModuleService
 	public Task<Boolean> DeleteData<T>(int id)
 	{
 		return DeleteDataAsync<T>(id);
+	}
+
+	public Task<List<object>> GetCollection()
+	{
+		return GetCollectionAsync();
 	}
 }
