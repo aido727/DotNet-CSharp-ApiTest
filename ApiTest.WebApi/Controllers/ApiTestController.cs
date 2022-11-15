@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using ApiTest.DataModule;
-using System.Net;
-using System.Net.Http;
 
 namespace ApiTest.WebApi.Controllers;
 
@@ -35,7 +33,7 @@ public class ApiTestController : ControllerBase
     {
         if(this.authHeaderHandler(this.Request.Headers))
         {
-            return await _dataModule.GetPosts();
+            return await _dataModule.GetDataList<Post>();
         }
         else
         {
@@ -46,15 +44,29 @@ public class ApiTestController : ControllerBase
 
     [Route("users")]
     [HttpGet]
-    public async Task<List<User>> GetUsers()
+    public async Task<ActionResult<List<User>>> GetUsers()
     {
-        return await _dataModule.GetUsers();
+        if(this.authHeaderHandler(this.Request.Headers))
+        {
+            return await _dataModule.GetDataList<User>();
+        }
+        else
+        {
+            return StatusCode(501);
+        }
     }
 
     [Route("albums")]
     [HttpGet]
-    public async Task<List<Album>> GetAlbums()
+    public async Task<ActionResult<List<Album>>> GetAlbums()
     {
-        return await _dataModule.GetAlbums();
+        if(this.authHeaderHandler(this.Request.Headers))
+        {
+            return await _dataModule.GetDataList<Album>();
+        }
+        else
+        {
+            return StatusCode(501);
+        }
     }
 }
