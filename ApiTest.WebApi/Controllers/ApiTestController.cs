@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using ApiTest.DataModule;
-using System.Collections;
 
 namespace ApiTest.WebApi.Controllers;
 
@@ -17,7 +16,7 @@ public class ApiTestController : ControllerBase
         _dataModule = dataModule;
     }
 
-    private Boolean authHeaderHandler(IHeaderDictionary headers)
+    public Boolean authHeaderHandler(IHeaderDictionary headers)
     {
         if(headers.ContainsKey("Authorization") && headers["Authorization"][0].StartsWith("Bearer "))
         {

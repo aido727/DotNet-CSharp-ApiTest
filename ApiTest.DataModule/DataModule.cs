@@ -8,7 +8,7 @@ public class DataModuleService
 	const string baseUrl = "https://jsonplaceholder.typicode.com/";
 
 	// convert from type to matching external api URL
-	private static string GetExternalUrl(string dataType, int id = -1)
+	public static string GetExternalUrl(string dataType, int id = -1)
 	{
 		var externalUrl = baseUrl;
 		switch(dataType.Substring(dataType.LastIndexOf(".")+1))
@@ -32,7 +32,7 @@ public class DataModuleService
 		return externalUrl;
 	}
 
-	private static async Task<List<T>> FetchDataAsync<T>(int id = -1) // assumption made that negative IDs are not valid
+	public static async Task<List<T>> FetchDataAsync<T>(int id = -1) // assumption made that negative IDs are not valid
 	{
 		try
 		{
@@ -76,7 +76,7 @@ public class DataModuleService
 		}
 	}
 
-	private static async Task<T> PostDataAsync<T>(T inputData)
+	public static async Task<T> PostDataAsync<T>(T inputData)
 	{
 		try
 		{
@@ -111,7 +111,7 @@ public class DataModuleService
 		}
 	}
 
-	private static async Task<T> PutDataAsync<T>(T inputData, int id)
+	public static async Task<T> PutDataAsync<T>(T inputData, int id)
 	{
 		try
 		{
@@ -146,7 +146,7 @@ public class DataModuleService
 		}
 	}
 
-	private static async Task<Boolean> DeleteDataAsync<T>(int id)
+	public static async Task<Boolean> DeleteDataAsync<T>(int id)
 	{
 		try
 		{
