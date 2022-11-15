@@ -27,7 +27,6 @@ public class DataModuleService
 							var data = await content.ReadAsStringAsync();
 							if (data != null)
 							{
-								Console.WriteLine(data);
 								switch(dataType)
 								{
 									case "posts":

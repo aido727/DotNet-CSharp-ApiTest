@@ -31,4 +31,4 @@ dotnet build ApiTest.sln
 dotnet run -p ApiTest.WebApi/ApiTest.Webapi.csproj
 ```
 
-Then go to the [Swagger UI](http://localhost:5143/swagger/index.html) in any browser (you may need to adjust the port number as shown in your terminal output)
+Using the localhost port provided in the terminal output, you can now use the API. (Using Swagger, Postman, or anything else of your choice)

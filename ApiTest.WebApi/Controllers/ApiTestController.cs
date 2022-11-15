@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ApiTest.DataModule;
+using System.Net;
+using System.Net.Http;
 
 namespace ApiTest.WebApi.Controllers;
 
@@ -16,11 +18,30 @@ public class ApiTestController : ControllerBase
         _dataModule = dataModule;
     }
 
+    private Boolean authHeaderHandler(IHeaderDictionary headers)
+    {
+        if(headers.ContainsKey("Authorization") && headers["Authorization"][0].StartsWith("Bearer "))
+        {
+            var token = headers["Authorization"][0].Substring("Bearer ".Length);
+
+            return token == "af24353tdsfw";
+        }
+        return false;
+    }
+
     [Route("posts")]
     [HttpGet]
-    public async Task<List<Post>> GetPosts()
+    public async Task<ActionResult<List<Post>>> GetPostsAsync()
     {
-        return await _dataModule.GetPosts();
+        if(this.authHeaderHandler(this.Request.Headers))
+        {
+            return await _dataModule.GetPosts();
+        }
+        else
+        {
+            return StatusCode(501);
+        }
+        
     }
 
     [Route("users")]
