@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections;
+using Newtonsoft.Json;
 
 namespace ApiTest.DataModule;
 
@@ -166,26 +167,26 @@ public class DataModuleService
 		}
 	}
 
-	public static async Task<List<object>> GetCollectionAsync()
+	public static async Task<List<Collection>> GetCollectionAsync()
 	{
 		const int numOfItems = 30;
 		try
 		{
-			List<Item> collection = new List<Item>();
-			List<object> result = new List<object>();
-			collection.AddRange(await FetchDataAsync<Post>());
-			collection.AddRange(await FetchDataAsync<User>());
-			collection.AddRange(await FetchDataAsync<Album>());
+			List<Collection> collection = new List<Collection>();
+			List<Post> posts = await FetchDataAsync<Post>();
+			List<User> users = await FetchDataAsync<User>();
+			List<Album> albums = await FetchDataAsync<Album>();
 
 			var random = new Random();
-			// NOTE: there's no guarentee one of each type will appear in the final list
+			// NOTE: there's no guarantee one of each type will appear in the final list
+			// Also, instructions said nothing about the data having to relate within each set
 
 			for(var i = 0; i < numOfItems; i++)
 			{
-				result.Add(collection[random.Next(collection.Count)]);
+				collection.Add(new Collection(posts[random.Next(posts.Count)], users[random.Next(users.Count)], albums[random.Next(albums.Count)]));
 			}
 
-			return result;		
+			return collection;		
 		}
 		catch(Exception exception)
 		{
@@ -219,7 +220,7 @@ public class DataModuleService
 		return DeleteDataAsync<T>(id);
 	}
 
-	public Task<List<object>> GetCollection()
+	public Task<List<Collection>> GetCollection()
 	{
 		return GetCollectionAsync();
 	}

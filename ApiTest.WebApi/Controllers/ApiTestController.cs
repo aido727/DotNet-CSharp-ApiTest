@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ApiTest.DataModule;
+using System.Collections;
 
 namespace ApiTest.WebApi.Controllers;
 
@@ -200,7 +201,7 @@ public class ApiTestController : ControllerBase
 
     [Route("collection")]
     [HttpGet]
-    public async Task<ActionResult<List<object>>> GetCollection()
+    public async Task<ActionResult<List<Collection>>> GetCollection()
     {
         if (this.authHeaderHandler(this.Request.Headers))
 		{

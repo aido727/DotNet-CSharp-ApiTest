@@ -53,3 +53,17 @@ public class Album : Item
 	public int userId { get; set; }
 	public string? title { get; set; }
 }
+
+public class Collection
+{
+	public Collection(Post post, User user, Album album)
+	{
+		this.post = post;
+		this.user = user;
+		this.album = album;
+	}
+
+	public Post? post { get; set; }
+	public User? user { get; set; }
+	public Album? album { get; set; }
+}
