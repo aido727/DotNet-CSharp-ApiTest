@@ -4,14 +4,9 @@ using ApiTest.DataModule;
 namespace ApiTest.WebApi.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api")]
 public class ApiTestController : ControllerBase
 {
-    // private static readonly string[] Summaries = new[]
-    // {
-    //     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    // };
-
     private readonly ILogger<ApiTestController> _logger;
     private readonly DataModuleService _dataModule;
 
@@ -21,21 +16,24 @@ public class ApiTestController : ControllerBase
         _dataModule = dataModule;
     }
 
+    [Route("posts")]
     [HttpGet]
-    public string Test()
+    public async Task<List<Post>> GetPosts()
     {
-        return _dataModule.Test();
+        return await _dataModule.GetPosts();
     }
 
-    // [HttpGet(Name = "GetWeatherForecast")]
-    // public IEnumerable<WeatherForecast> Get()
-    // {
-    //     return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-    //     {
-    //         Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-    //         TemperatureC = Random.Shared.Next(-20, 55),
-    //         Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-    //     })
-    //     .ToArray();
-    // }
+    [Route("users")]
+    [HttpGet]
+    public async Task<List<User>> GetUsers()
+    {
+        return await _dataModule.GetUsers();
+    }
+
+    [Route("albums")]
+    [HttpGet]
+    public async Task<List<Album>> GetAlbums()
+    {
+        return await _dataModule.GetAlbums();
+    }
 }
